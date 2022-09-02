@@ -38,6 +38,10 @@ public class ConnectionManager {
         semaphore = nil
     }
     
+    deinit {
+        monitor.cancel()
+    }
+    
     private func setConnection(path: NWPath) {
         guard path.status == .satisfied else {
             if self.connectionType != .none {
