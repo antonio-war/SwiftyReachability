@@ -16,18 +16,30 @@ public class ConnectionManager {
     
     private var semaphore : DispatchSemaphore? = DispatchSemaphore(value: 0)
     
-    public var connectionType: ConnectionType? {
+    public var connectionStatus: ConnectionStatus {
         didSet {
-            print(connectionType)
             semaphore?.signal()
+            for observer in observers {
+                observer.didChangeConnectionStatus(connectionStatus)
+            }
         }
     }
     
-    public var isConnected: Bool {
-        return connectionType != nil
+    public var connectionType: ConnectionType? {
+        didSet {
+            if let connectionType = connectionType {
+                for observer in observers {
+                    observer.didChangeConnectionType(connectionType)
+                }
+            }
+        }
     }
     
+    private var observers : [ConnectionObserver]
+    
     private init() {
+        connectionStatus = .offline
+        observers = []
         monitor = NWPathMonitor.init()
         
         monitor.pathUpdateHandler = { path in
@@ -41,15 +53,22 @@ public class ConnectionManager {
     }
     
     private func setConnection(path: NWPath) {
+        var newConnectionStatus : ConnectionStatus = .offline
         var newConnectionType : ConnectionType? = nil
         
         guard path.status == .satisfied else {
+            newConnectionStatus = .offline
             newConnectionType = .none
+            if self.connectionStatus != newConnectionStatus {
+                self.connectionStatus = newConnectionStatus
+            }
             if self.connectionType != newConnectionType {
                 self.connectionType = newConnectionType
             }
             return
         }
+        
+        newConnectionStatus = .online
         
         if path.usesInterfaceType(.cellular) {
             let networkInfo = CTTelephonyNetworkInfo()
@@ -67,8 +86,8 @@ public class ConnectionManager {
             default:
                 if #available(iOS 14.1, *) {
                     switch currentRadio {
-                        case CTRadioAccessTechnologyNRNSA, CTRadioAccessTechnologyNR:
-                            newConnectionType = .cellular(radioType: ._5G)
+                    case CTRadioAccessTechnologyNRNSA, CTRadioAccessTechnologyNR:
+                        newConnectionType = .cellular(radioType: ._5G)
                     default:
                         newConnectionType = .cellular(radioType: .undefined)
                     }
@@ -82,8 +101,26 @@ public class ConnectionManager {
             newConnectionType = .ethernet
         }
         
+        if self.connectionStatus != newConnectionStatus {
+            self.connectionStatus = newConnectionStatus
+        }
+        
         if self.connectionType != newConnectionType {
             self.connectionType = newConnectionType
+        }
+    }
+    
+    internal func addObserver(observer: ConnectionObserver) {
+        observer.didChangeConnectionStatus(connectionStatus)
+        if let connectionType = connectionType {
+            observer.didChangeConnectionType(connectionType)
+        }
+        observers.append(observer)
+    }
+    
+    internal func removeObserver(observer: ConnectionObserver) {
+        if let element = observers.enumerated().first(where: {$0.element.observerId == observer.observerId}) {
+            observers.remove(at: element.offset)
         }
     }
     
