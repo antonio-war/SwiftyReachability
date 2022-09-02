@@ -6,6 +6,7 @@
 //
 
 import Network
+import CoreTelephony
 
 public class ConnectionManager {
     
@@ -27,7 +28,7 @@ public class ConnectionManager {
     
     private init() {
         monitor = NWPathMonitor.init()
-                    
+        
         monitor.pathUpdateHandler = { path in
             self.setConnection(path: path)
         }
@@ -38,30 +39,54 @@ public class ConnectionManager {
         semaphore = nil
     }
     
-    deinit {
-        monitor.cancel()
-    }
-    
     private func setConnection(path: NWPath) {
+        var newConnectionType : ConnectionType? = nil
+        
         guard path.status == .satisfied else {
-            if self.connectionType != .none {
-                self.connectionType = .none
+            newConnectionType = .none
+            if self.connectionType != newConnectionType {
+                self.connectionType = newConnectionType
             }
             return
         }
         
         if path.usesInterfaceType(.cellular) {
-            if self.connectionType != .cellular {
-                self.connectionType = .cellular
+            let networkInfo = CTTelephonyNetworkInfo()
+            guard let currentRadio = networkInfo.serviceCurrentRadioAccessTechnology?.values.first else {
+                newConnectionType = .cellular(radioType: .undefined)
+                return
+            }
+            switch currentRadio {
+            case CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyCDMA1x:
+                newConnectionType = .cellular(radioType: ._2G)
+            case CTRadioAccessTechnologyWCDMA, CTRadioAccessTechnologyHSDPA, CTRadioAccessTechnologyHSUPA, CTRadioAccessTechnologyCDMAEVDORev0, CTRadioAccessTechnologyCDMAEVDORevA, CTRadioAccessTechnologyCDMAEVDORevB, CTRadioAccessTechnologyeHRPD:
+                newConnectionType = .cellular(radioType: ._3G)
+            case CTRadioAccessTechnologyLTE:
+                newConnectionType = .cellular(radioType: ._4G)
+            default:
+                if #available(iOS 14.1, *) {
+                    switch currentRadio {
+                        case CTRadioAccessTechnologyNRNSA, CTRadioAccessTechnologyNR:
+                            newConnectionType = .cellular(radioType: ._5G)
+                    default:
+                        newConnectionType = .cellular(radioType: .undefined)
+                    }
+                } else {
+                    newConnectionType = .cellular(radioType: .undefined)
+                }
             }
         } else if path.usesInterfaceType(.wifi) {
-            if self.connectionType != .wifi {
-                self.connectionType = .wifi
-            }
+            newConnectionType = .wifi
         } else if path.usesInterfaceType(.wiredEthernet) {
-            if self.connectionType != .ethernet {
-                self.connectionType = .ethernet
-            }
+            newConnectionType = .ethernet
         }
+        
+        if self.connectionType != newConnectionType {
+            self.connectionType = newConnectionType
+        }
+    }
+    
+    deinit {
+        monitor.cancel()
     }
 }

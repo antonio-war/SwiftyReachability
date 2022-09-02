@@ -7,8 +7,8 @@
 
 import Foundation
 
-public enum ConnectionType {
-    case cellular
+public enum ConnectionType : Equatable {
+    case cellular(radioType: RadioType)
     case wifi
     case ethernet
 }
