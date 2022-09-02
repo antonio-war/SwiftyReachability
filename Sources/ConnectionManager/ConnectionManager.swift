@@ -27,10 +27,8 @@ public class ConnectionManager {
     
     public var connectionType: ConnectionType? {
         didSet {
-            if let connectionType = connectionType {
-                for observer in observers {
-                    observer.didChangeConnectionType(connectionType)
-                }
+            for observer in observers {
+                observer.didChangeConnectionType(connectionType)
             }
         }
     }

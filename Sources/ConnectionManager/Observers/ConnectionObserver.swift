@@ -11,7 +11,7 @@ public protocol ConnectionObserver {
     func startObserving()
     func stopObserving()
     func didChangeConnectionStatus(_ status: ConnectionStatus)
-    func didChangeConnectionType(_ type: ConnectionType)
+    func didChangeConnectionType(_ type: ConnectionType?)
 }
 
 public extension ConnectionObserver {
