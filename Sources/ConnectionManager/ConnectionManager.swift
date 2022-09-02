@@ -18,6 +18,7 @@ public class ConnectionManager {
     
     public var connectionType: ConnectionType? {
         didSet {
+            print(connectionType)
             semaphore?.signal()
         }
     }
