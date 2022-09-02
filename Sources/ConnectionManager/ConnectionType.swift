@@ -15,18 +15,7 @@ public enum ConnectionType : Equatable, CustomStringConvertible {
     public var description: String {
         switch self {
         case .cellular(let radioType):
-            switch radioType {
-            case .undefined:
-                return "Cellular<?>"
-            case ._2G:
-                return "Cellular<2G>"
-            case ._3G:
-                return "Cellular<3G>"
-            case ._4G:
-                return "Cellular<4G>"
-            case ._5G:
-                return "Cellular<5G>"
-            }
+            return "Cellular(" + radioType.description + ")"
         case .wifi:
             return "WiFi"
         case .ethernet:
