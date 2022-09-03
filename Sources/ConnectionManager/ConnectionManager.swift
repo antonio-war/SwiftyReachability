@@ -117,8 +117,8 @@ public class ConnectionManager {
     }
     
     internal func removeObserver(observer: ConnectionObserver) {
-        if let element = observers.enumerated().first(where: {$0.element.observerId == observer.observerId}) {
-            observers.remove(at: element.offset)
+        if let index = observers.firstIndex(where: { $0.observerId == observer.observerId }) {
+            observers.remove(at: index)
         }
     }
     

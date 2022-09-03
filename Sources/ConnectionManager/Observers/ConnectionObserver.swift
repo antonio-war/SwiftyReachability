@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol ConnectionObserver {
+    var observerId : UUID { get }
     func startObserving()
     func stopObserving()
     func didChangeConnectionStatus(_ status: ConnectionStatus)
@@ -15,11 +16,6 @@ public protocol ConnectionObserver {
 }
 
 public extension ConnectionObserver {
-    
-    var observerId: String {
-        get { return UUID().uuidString }
-    }
-
     func startObserving() {
         ConnectionManager.shared.addObserver(observer: self)
     }

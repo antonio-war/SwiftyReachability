@@ -11,6 +11,8 @@ import SwiftUI
 @available(iOS 13.0, *)
 class ConnectionObserverUI: ObservableObject, ConnectionObserver {
     
+    var observerId: UUID = UUID()
+    
     @Published
     var connectionStatus: ConnectionStatus
     
