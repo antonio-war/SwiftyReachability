@@ -18,7 +18,6 @@ public class ConnectionManager {
     
     public var connectionStatus: ConnectionStatus {
         didSet {
-            semaphore?.signal()
             for observer in observers {
                 observer.didChangeConnectionStatus(connectionStatus)
             }
@@ -64,6 +63,7 @@ public class ConnectionManager {
             if self.connectionType != newConnectionType {
                 self.connectionType = newConnectionType
             }
+            semaphore?.signal()
             return
         }
         
@@ -107,13 +107,12 @@ public class ConnectionManager {
         if self.connectionType != newConnectionType {
             self.connectionType = newConnectionType
         }
+        semaphore?.signal()
     }
     
     internal func addObserver(observer: ConnectionObserver) {
         observer.didChangeConnectionStatus(connectionStatus)
-        if let connectionType = connectionType {
-            observer.didChangeConnectionType(connectionType)
-        }
+        observer.didChangeConnectionType(connectionType)
         observers.append(observer)
     }
     
