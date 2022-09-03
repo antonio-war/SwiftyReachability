@@ -37,6 +37,7 @@ public class ConnectionManager {
     
     private init() {
         connectionStatus = .offline
+        connectionType = .none
         observers = []
         monitor = NWPathMonitor.init()
         
