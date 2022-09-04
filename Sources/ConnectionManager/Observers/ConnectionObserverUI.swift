@@ -8,9 +8,7 @@
 import Foundation
 
 @available(iOS 13.0, *)
-public class ConnectionObserverUI: ObservableObject, ConnectionObserver {
-    
-    public var observerId: UUID = UUID()
+public class ConnectionObserverUI: ObservableObject {
     
     @Published
     public var connectionStatus: ConnectionStatus
@@ -18,25 +16,42 @@ public class ConnectionObserverUI: ObservableObject, ConnectionObserver {
     @Published
     public var connectionType: ConnectionType?
     
+    private var hiddenObserver: HiddenObserver
+    
     public init() {
+        self.hiddenObserver = HiddenObserver()
         self.connectionStatus = .offline
         self.connectionType = .none
-        startObserving()
+        self.hiddenObserver.setExternalObserver(observer: self)
     }
     
-    deinit {
-        stopObserving()
-    }
-    
-    public func didChangeConnectionStatus(_ status: ConnectionStatus) {
-        DispatchQueue.main.async {
-            self.connectionStatus = status
+    class HiddenObserver : ConnectionObserver {
+        weak var externalObserver: ConnectionObserverUI?
+        
+        var observerId: UUID = UUID()
+        
+        init() {
+            startObserving()
         }
-    }
-    
-    public func didChangeConnectionType(_ type: ConnectionType?) {
-        DispatchQueue.main.async {
-            self.connectionType = type
+        
+        func setExternalObserver(observer: ConnectionObserverUI) {
+            self.externalObserver = observer
+        }
+        
+        deinit {
+            stopObserving()
+        }
+        
+        public func didChangeConnectionStatus(_ status: ConnectionStatus) {
+            DispatchQueue.main.async {
+                self.externalObserver?.connectionStatus = status
+            }
+        }
+        
+        public func didChangeConnectionType(_ type: ConnectionType?) {
+            DispatchQueue.main.async {
+                self.externalObserver?.connectionType = type
+            }
         }
     }
 }
