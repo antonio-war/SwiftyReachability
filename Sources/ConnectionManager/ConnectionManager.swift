@@ -18,7 +18,7 @@ public class ConnectionManager {
     
     public var connectionStatus: ConnectionStatus {
         didSet {
-            for observer in observers {
+            for observer in observers.values {
                 observer.didChangeConnectionStatus(connectionStatus)
             }
         }
@@ -26,18 +26,18 @@ public class ConnectionManager {
     
     public var connectionType: ConnectionType? {
         didSet {
-            for observer in observers {
+            for observer in observers.values {
                 observer.didChangeConnectionType(connectionType)
             }
         }
     }
     
-    private var observers : [ConnectionObserver]
+    private var observers : [String: ConnectionObserver]
     
     private init() {
         connectionStatus = .offline
         connectionType = .none
-        observers = []
+        observers = [:]
         monitor = NWPathMonitor.init()
         
         monitor.pathUpdateHandler = { path in
@@ -113,13 +113,11 @@ public class ConnectionManager {
     internal func addObserver(observer: ConnectionObserver) {
         observer.didChangeConnectionStatus(connectionStatus)
         observer.didChangeConnectionType(connectionType)
-        observers.append(observer)
+        observers[observer.connectionObserverId] = observer
     }
     
     internal func removeObserver(observer: ConnectionObserver) {
-        if let index = observers.firstIndex(where: { $0.observerId == observer.observerId }) {
-            observers.remove(at: index)
-        }
+        observers[observer.connectionObserverId] = nil
     }
     
     deinit {

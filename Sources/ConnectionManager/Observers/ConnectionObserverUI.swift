@@ -28,8 +28,6 @@ public class ConnectionObserverUI: ObservableObject {
     class HiddenObserver : ConnectionObserver {
         weak var externalObserver: ConnectionObserverUI?
         
-        var observerId: UUID = UUID()
-        
         init() {
             startObserving()
         }
