@@ -6,20 +6,19 @@
 //
 
 import Foundation
-import SwiftUI
 
 @available(iOS 13.0, *)
-class ConnectionObserverUI: ObservableObject, ConnectionObserver {
+public class ConnectionObserverUI: ObservableObject, ConnectionObserver {
     
-    var observerId: UUID = UUID()
-    
-    @Published
-    var connectionStatus: ConnectionStatus
+    public var observerId: UUID = UUID()
     
     @Published
-    var connectionType: ConnectionType?
+    public var connectionStatus: ConnectionStatus
     
-    init() {
+    @Published
+    public var connectionType: ConnectionType?
+    
+    public init() {
         self.connectionStatus = .offline
         self.connectionType = .none
         startObserving()
@@ -29,11 +28,15 @@ class ConnectionObserverUI: ObservableObject, ConnectionObserver {
         stopObserving()
     }
     
-    func didChangeConnectionStatus(_ status: ConnectionStatus) {
-        self.connectionStatus = connectionStatus
+    public func didChangeConnectionStatus(_ status: ConnectionStatus) {
+        DispatchQueue.main.async {
+            self.connectionStatus = status
+        }
     }
     
-    func didChangeConnectionType(_ type: ConnectionType?) {
-        self.connectionType = connectionType
+    public func didChangeConnectionType(_ type: ConnectionType?) {
+        DispatchQueue.main.async {
+            self.connectionType = type
+        }
     }
 }
