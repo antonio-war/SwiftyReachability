@@ -3,18 +3,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "ConnectionManager",
+    name: "SwiftyReachability",
     platforms: [.iOS(.v12), .macOS(.v10_14)],
     products: [
         .library(
-            name: "ConnectionManager",
-            targets: ["ConnectionManager"]),
+            name: "SwiftyReachability",
+            targets: ["SwiftyReachability"]),
     ],
     dependencies: [
     ],
     targets: [
         .target(
-            name: "ConnectionManager",
+            name: "SwiftyReachability",
             dependencies: []),
     ]
 )

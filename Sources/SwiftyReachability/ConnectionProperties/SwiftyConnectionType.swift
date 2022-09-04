@@ -1,5 +1,5 @@
 //
-//  ConnectionType.swift
+//  SwiftyConnectionType.swift
 //  
 //
 //  Created by AntonioWar on 02/09/22.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-public enum ConnectionType : Equatable, CustomStringConvertible {
-    case cellular(radioType: RadioType)
+public enum SwiftyConnectionType : Equatable, CustomStringConvertible {
+    case cellular(radioType: SwiftyRadioType)
     case wifi
     case ethernet
     

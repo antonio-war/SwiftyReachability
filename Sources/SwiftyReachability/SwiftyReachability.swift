@@ -1,5 +1,5 @@
 //
-//  ConnectionManager.swift
+//  SwiftyReachability.swift
 //
 //
 //  Created by AntonioWar on 02/09/22.
@@ -8,15 +8,15 @@
 import Network
 import CoreTelephony
 
-public class ConnectionManager {
+public class SwiftyReachability {
     
-    public static var shared : ConnectionManager = ConnectionManager()
+    public static var shared : SwiftyReachability = SwiftyReachability()
     
     private let monitor : NWPathMonitor
     
     private var semaphore : DispatchSemaphore? = DispatchSemaphore(value: 0)
     
-    public var connectionStatus: ConnectionStatus {
+    public var connectionStatus: SwiftyConnectionStatus {
         didSet {
             for observer in observers.values {
                 observer.didChangeConnectionStatus(connectionStatus)
@@ -24,7 +24,7 @@ public class ConnectionManager {
         }
     }
     
-    public var connectionType: ConnectionType? {
+    public var connectionType: SwiftyConnectionType? {
         didSet {
             for observer in observers.values {
                 observer.didChangeConnectionType(connectionType)
@@ -32,7 +32,7 @@ public class ConnectionManager {
         }
     }
     
-    private var observers : [String: ConnectionObserver]
+    private var observers : [String: SwiftyReachabilityObserver]
     
     private init() {
         connectionStatus = .offline
@@ -51,8 +51,8 @@ public class ConnectionManager {
     }
     
     private func setConnection(path: NWPath) {
-        var newConnectionStatus : ConnectionStatus = .offline
-        var newConnectionType : ConnectionType? = nil
+        var newConnectionStatus : SwiftyConnectionStatus = .offline
+        var newConnectionType : SwiftyConnectionType? = nil
         
         guard path.status == .satisfied else {
             newConnectionStatus = .offline
@@ -110,13 +110,13 @@ public class ConnectionManager {
         semaphore?.signal()
     }
     
-    internal func addObserver(observer: ConnectionObserver) {
+    internal func addObserver(observer: SwiftyReachabilityObserver) {
         observer.didChangeConnectionStatus(connectionStatus)
         observer.didChangeConnectionType(connectionType)
         observers[observer.connectionObserverId] = observer
     }
     
-    internal func removeObserver(observer: ConnectionObserver) {
+    internal func removeObserver(observer: SwiftyReachabilityObserver) {
         observers[observer.connectionObserverId] = nil
     }
     

@@ -1,5 +1,5 @@
 //
-//  RadioType.swift
+//  SwiftyRadioType.swift
 //  
 //
 //  Created by AntonioWar on 02/09/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum RadioType: CustomStringConvertible {
+public enum SwiftyRadioType: CustomStringConvertible {
     case undefined
     case _2G
     case _3G

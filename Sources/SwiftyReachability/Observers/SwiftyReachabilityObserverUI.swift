@@ -1,5 +1,5 @@
 //
-//  ConnectionObserverUI.swift
+//  SwiftyReachabilityObserverUI.swift
 //  
 //
 //  Created by AntonioWar on 03/09/22.
@@ -8,13 +8,13 @@
 import Foundation
 
 @available(iOS 13.0, *)
-public class ConnectionObserverUI: ObservableObject {
+public class SwiftyReachabilityObserverUI: ObservableObject {
     
     @Published
-    public var connectionStatus: ConnectionStatus
+    public var connectionStatus: SwiftyConnectionStatus
     
     @Published
-    public var connectionType: ConnectionType?
+    public var connectionType: SwiftyConnectionType?
     
     private var hiddenObserver: HiddenObserver
     
@@ -25,14 +25,14 @@ public class ConnectionObserverUI: ObservableObject {
         self.hiddenObserver.setExternalObserver(observer: self)
     }
     
-    class HiddenObserver : ConnectionObserver {
-        weak var externalObserver: ConnectionObserverUI?
+    class HiddenObserver : SwiftyReachabilityObserver {
+        weak var externalObserver: SwiftyReachabilityObserverUI?
         
         init() {
             startObserving()
         }
         
-        func setExternalObserver(observer: ConnectionObserverUI) {
+        func setExternalObserver(observer: SwiftyReachabilityObserverUI) {
             self.externalObserver = observer
         }
         
@@ -40,13 +40,13 @@ public class ConnectionObserverUI: ObservableObject {
             stopObserving()
         }
         
-        public func didChangeConnectionStatus(_ status: ConnectionStatus) {
+        public func didChangeConnectionStatus(_ status: SwiftyConnectionStatus) {
             DispatchQueue.main.async {
                 self.externalObserver?.connectionStatus = status
             }
         }
         
-        public func didChangeConnectionType(_ type: ConnectionType?) {
+        public func didChangeConnectionType(_ type: SwiftyConnectionType?) {
             DispatchQueue.main.async {
                 self.externalObserver?.connectionType = type
             }
