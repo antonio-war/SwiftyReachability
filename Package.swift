@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftyReachability",
-    platforms: [.iOS(.v12), .macOS(.v10_14), .watchOS(.v5)],
+    platforms: [.iOS(.v12), .macOS(.v10_14), .watchOS(.v5), .tvOS(.v12)],
     products: [
         .library(
             name: "SwiftyReachability",
