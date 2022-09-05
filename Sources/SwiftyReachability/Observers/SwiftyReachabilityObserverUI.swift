@@ -7,7 +7,7 @@
 
 import Foundation
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 public class SwiftyReachabilityObserverUI: ObservableObject {
     
     @Published

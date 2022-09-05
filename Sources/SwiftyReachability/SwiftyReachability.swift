@@ -6,7 +6,9 @@
 //
 
 import Network
+#if !os(watchOS)
 import CoreTelephony
+#endif
 
 public class SwiftyReachability {
     
@@ -70,30 +72,34 @@ public class SwiftyReachability {
         newConnectionStatus = .online
         
         if path.usesInterfaceType(.cellular) {
-            let networkInfo = CTTelephonyNetworkInfo()
-            guard let currentRadio = networkInfo.serviceCurrentRadioAccessTechnology?.values.first else {
-                newConnectionType = .cellular(radioType: .undefined)
-                return
-            }
-            switch currentRadio {
-            case CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyCDMA1x:
-                newConnectionType = .cellular(radioType: ._2G)
-            case CTRadioAccessTechnologyWCDMA, CTRadioAccessTechnologyHSDPA, CTRadioAccessTechnologyHSUPA, CTRadioAccessTechnologyCDMAEVDORev0, CTRadioAccessTechnologyCDMAEVDORevA, CTRadioAccessTechnologyCDMAEVDORevB, CTRadioAccessTechnologyeHRPD:
-                newConnectionType = .cellular(radioType: ._3G)
-            case CTRadioAccessTechnologyLTE:
-                newConnectionType = .cellular(radioType: ._4G)
-            default:
-                if #available(iOS 14.1, *) {
-                    switch currentRadio {
-                    case CTRadioAccessTechnologyNRNSA, CTRadioAccessTechnologyNR:
-                        newConnectionType = .cellular(radioType: ._5G)
-                    default:
+            #if os(iOS)
+                let networkInfo = CTTelephonyNetworkInfo()
+                guard let currentRadio = networkInfo.serviceCurrentRadioAccessTechnology?.values.first else {
+                    newConnectionType = .cellular(radioType: .undefined)
+                    return
+                }
+                switch currentRadio {
+                case CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyCDMA1x:
+                    newConnectionType = .cellular(radioType: ._2G)
+                case CTRadioAccessTechnologyWCDMA, CTRadioAccessTechnologyHSDPA, CTRadioAccessTechnologyHSUPA, CTRadioAccessTechnologyCDMAEVDORev0, CTRadioAccessTechnologyCDMAEVDORevA, CTRadioAccessTechnologyCDMAEVDORevB, CTRadioAccessTechnologyeHRPD:
+                    newConnectionType = .cellular(radioType: ._3G)
+                case CTRadioAccessTechnologyLTE:
+                    newConnectionType = .cellular(radioType: ._4G)
+                default:
+                    if #available(iOS 14.1, *) {
+                        switch currentRadio {
+                        case CTRadioAccessTechnologyNRNSA, CTRadioAccessTechnologyNR:
+                            newConnectionType = .cellular(radioType: ._5G)
+                        default:
+                            newConnectionType = .cellular(radioType: .undefined)
+                        }
+                    } else {
                         newConnectionType = .cellular(radioType: .undefined)
                     }
-                } else {
-                    newConnectionType = .cellular(radioType: .undefined)
                 }
-            }
+            #else
+                newConnectionType = .cellular(radioType: .undefined)
+            #endif
         } else if path.usesInterfaceType(.wifi) {
             newConnectionType = .wifi
         } else if path.usesInterfaceType(.wiredEthernet) {
