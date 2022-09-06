@@ -163,3 +163,27 @@ class UIKitViewController: UIViewController, SwiftyReachabilityObserver {
 ```
 
 ## SwiftUI
+
+In this case we have instead created an ad hoc solution with an ObservableObject. It is really easy to use **SwiftyReachabilityObserverUI**
+
+```swift
+struct SwiftUIView: View {
+    
+    @ObservedObject
+    var connectionObserver : SwiftyReachabilityObserverUI = SwiftyReachabilityObserverUI()
+    
+    var body: some View {
+        VStack {
+            if connectionObserver.connectionStatus == .online {
+                Text("Online")
+            } else {
+                Text("Offline")
+            }
+            
+            if let connectionTypeDescription = connectionObserver.connectionType?.description {
+                Text(connectionTypeDescription)
+            }
+        }
+    }
+}
+```
