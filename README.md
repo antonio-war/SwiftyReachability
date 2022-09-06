@@ -4,4 +4,4 @@
 
 SwiftyReachability is a simple and lightweight network interface manager written in Swift.
 
-Freely inspired by https://github.com/tonymillion/Reachability, with the aim of providing an updated interface that includes all the innovations introduced in the iOS world since its latest update.
+Freely inspired by https://github.com/tonymillion/Reachability, with the aim of providing an updated interface that includes all the innovations introduced in the iOS world since its latest update and add new features.
