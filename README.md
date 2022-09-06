@@ -11,3 +11,28 @@ Freely inspired by https://github.com/tonymillion/Reachability, with the aim of 
 - **Detailed:** it allows you to know the connection type used and in the case of 'Cellular Network' you also know which radio technology is being used.
 - **SwiftUI compatible:** provides an elegant SwiftUI support that is very easy to use.
 - **Multiple Observers:** you can define several network Observers at the same time to get information and update your UI.
+
+---
+
+# Installation
+
+You can use Swift Package Manager to add SwiftyPackage to your project.
+
+## Add Package Dependency
+
+In Xcode, select File > Add Packages...
+
+## Specify the Repository
+
+Copy and paste the following into the search/input box.
+
+https://github.com/antonio-war/SwiftyReachability
+
+## Specify options
+
+Use **Up to Next Major Version** as dependency rule and enter the current SwiftyCache version.
+Then click **Add Package**.
+
+---
+
+# Getting Started
