@@ -89,3 +89,5 @@ let type = connectionManager.connectionType
 
 # Observer Usage
 
+When the status of your app needs to be updated based on the connection status you may need an observer. Obviously SwiftyReachability provides all the elements for this type of implementation.
+
