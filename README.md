@@ -76,4 +76,12 @@ On some devices, however, this feature is not available, at least for now.
 
 ---
 
-# Getting Started
+# Simple Usage
+
+In case you need to access current information, without the need to be informed about future changes, it's possibile to do so by directly accessing to the shared instance of SwiftyReachability.
+
+```swift
+let connectionManager = SwiftyReachability.shared
+let status = connectionManager.connectionStatus
+let type = connectionManager.connectionType      
+```
