@@ -73,3 +73,7 @@ enum SwiftyRadioType {
 }
 ```
 On some devices, however, this feature is not available, at least for now.
+
+---
+
+# Getting Started
