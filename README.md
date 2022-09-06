@@ -188,5 +188,9 @@ struct SwiftUIView: View {
 }
 ```
 ---
+# Advice
+
+Like any other package related to Reachability, in the case simulator execution, there may be delays in the functioning of the network observers. We therefore recommend testing your code on devices, where these problems do not occur.
+---
 # License
 SwiftyCache is published under the Apache 2.0 license.
