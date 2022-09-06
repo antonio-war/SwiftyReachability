@@ -16,7 +16,7 @@ Freely inspired by https://github.com/tonymillion/Reachability, with the aim of 
 
 # Installation
 
-You can use Swift Package Manager to add SwiftyPackage to your project.
+You can use Swift Package Manager to add SwiftyReachability to your project.
 
 ## Add Package Dependency
 
