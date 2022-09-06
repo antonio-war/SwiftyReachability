@@ -94,3 +94,7 @@ When the status of your app needs to be updated based on the connection status y
 <p align="center">
 <img src="https://user-images.githubusercontent.com/59933379/188596659-347dd5e7-3a8b-45dc-9e06-19c3bc716280.gif" width="200" />
 </p>
+
+## Swift / UIKit
+
+For simple objects or view created with UIKit we provide a protocol oriented solution. The object must conform to the **SwiftyReachabilityObserver** protocol and implement the required methods.
