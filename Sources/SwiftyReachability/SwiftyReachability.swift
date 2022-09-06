@@ -6,7 +6,7 @@
 //
 
 import Network
-#if !os(watchOS)
+#if os(iOS)
 import CoreTelephony
 #endif
 
