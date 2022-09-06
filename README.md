@@ -59,3 +59,6 @@ enum SwiftyConnectionType {
     case ethernet
 }
 ```
+## Radio Type
+
+Unlike original Reachability framework we introduced other information, when the device is connected to a cellular network you can know if it is using a 3G, LT or some other radio type, through **SwiftyRadioType**.
