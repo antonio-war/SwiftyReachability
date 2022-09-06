@@ -35,7 +35,7 @@ Then click **Add Package**.
 
 ---
 
-# Getting Started
+# Overview
 
 ## Connection Status
 
