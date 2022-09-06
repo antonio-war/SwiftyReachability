@@ -99,3 +99,67 @@ When the status of your app needs to be updated based on the connection status y
 
 For simple objects or view created with UIKit we provide a protocol oriented solution. The object must conform to the **SwiftyReachabilityObserver** protocol and implement the required methods.
 He also has to decide when to start and stop the observation.
+
+```swift
+class UIKitViewController: UIViewController, SwiftyReachabilityObserver {
+    
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var connectionTypeImage: UIImageView!
+    @IBOutlet weak var radioTypeLabel: UILabel!
+        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startObserving()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopObserving()
+    }
+    
+    func didChangeConnectionStatus(_ status: SwiftyConnectionStatus) {
+        DispatchQueue.main.async {
+            switch status {
+                case .online:
+                self.statusLabel.text = "Online"
+                self.statusLabel.backgroundColor = .systemGreen
+                case .offline:
+                self.statusLabel.text = "Offline"
+                self.statusLabel.backgroundColor = .systemRed
+            }
+        }
+    }
+    
+    func didChangeConnectionType(_ type: SwiftyConnectionType?) {
+        DispatchQueue.main.async {
+            guard let connectionType = type else {
+                self.connectionTypeImage.isHidden = true
+                self.radioTypeLabel.isHidden = true
+                return
+            }
+            
+            switch connectionType {
+            case .cellular(let radioType):
+                self.connectionTypeImage.image = UIImage(systemName: "antenna.radiowaves.left.and.right")
+                self.connectionTypeImage.isHidden = false
+                self.radioTypeLabel.text = radioType.description
+                self.radioTypeLabel.isHidden = false
+            case .wifi:
+                self.connectionTypeImage.image = UIImage(systemName: "wifi")
+                self.connectionTypeImage.isHidden = false
+                self.radioTypeLabel.isHidden = true
+            case .ethernet:
+                self.connectionTypeImage.image = UIImage(systemName: "cable.connector")
+                self.connectionTypeImage.isHidden = false
+                self.radioTypeLabel.isHidden = true
+            }
+        }
+    }
+}
+```
+
+## SwiftUI
