@@ -91,3 +91,4 @@ let type = connectionManager.connectionType
 
 When the status of your app needs to be updated based on the connection status you may need an observer. Obviously SwiftyReachability provides all the elements for this type of implementation.
 
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/59933379/188596659-347dd5e7-3a8b-45dc-9e06-19c3bc716280.gif) 
