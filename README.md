@@ -98,3 +98,4 @@ When the status of your app needs to be updated based on the connection status y
 ## Swift / UIKit
 
 For simple objects or view created with UIKit we provide a protocol oriented solution. The object must conform to the **SwiftyReachabilityObserver** protocol and implement the required methods.
+He also has to decide when to start and stop the observation.
