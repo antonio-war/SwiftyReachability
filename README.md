@@ -42,8 +42,20 @@ Then click **Add Package**.
 SwiftyReachability's main purpose is to track device connectivity. Through **SwiftyConnectionStatus** it is possible to find out if it is online or offline.
 
 ```swift
-public enum SwiftyConnectionStatus {
+enum SwiftyConnectionStatus {
     case online
     case offline
+}
+```
+
+## Connection Type
+
+When the device is online it may be useful to know information about the connection type. You can do it through **SwiftyConnectionType**.
+
+```swift
+enum SwiftyConnectionType {
+    case cellular(radioType: SwiftyRadioType)
+    case wifi
+    case ethernet
 }
 ```
