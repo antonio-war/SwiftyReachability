@@ -187,3 +187,6 @@ struct SwiftUIView: View {
     }
 }
 ```
+---
+# License
+SwiftyCache is published under the Apache 2.0 license.
