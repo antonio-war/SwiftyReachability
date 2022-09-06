@@ -30,7 +30,7 @@ https://github.com/antonio-war/SwiftyReachability
 
 ## Specify options
 
-Use **Up to Next Major Version** as dependency rule and enter the current SwiftyCache version.
+Use **Up to Next Major Version** as dependency rule and enter the current SwiftyReachability version.
 Then click **Add Package**.
 
 ---
