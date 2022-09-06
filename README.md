@@ -85,3 +85,7 @@ let connectionManager = SwiftyReachability.shared
 let status = connectionManager.connectionStatus
 let type = connectionManager.connectionType      
 ```
+---
+
+# Observer Usage
+
