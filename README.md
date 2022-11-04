@@ -2,6 +2,9 @@
 <img width="1042" alt="Schermata 2022-09-06 alle 10 04 08" src="https://user-images.githubusercontent.com/59933379/188581267-2457d49c-119f-4109-9573-b1069c40ad37.png">
 </p>
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fantonio-war%2FSwiftyReachability%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/antonio-war/SwiftyReachability)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fantonio-war%2FSwiftyReachability%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/antonio-war/SwiftyReachability)
+
 SwiftyReachability is a simple and lightweight network interface manager written in Swift.
 
 Freely inspired by https://github.com/tonymillion/Reachability, with the aim of providing an updated interface that includes all the innovations introduced in the iOS world since its latest update and add new features.
