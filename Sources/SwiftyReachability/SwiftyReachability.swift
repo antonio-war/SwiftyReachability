@@ -46,7 +46,7 @@ public class SwiftyReachability {
             self.setConnection(path: path)
         }
         
-        monitor.start(queue: DispatchQueue.global(qos: .background))
+        monitor.start(queue: DispatchQueue.global(qos: .default))
         
         semaphore?.wait()
         semaphore = nil
